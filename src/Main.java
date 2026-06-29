@@ -1,21 +1,17 @@
 public class Main {
     public static void main(String[] args) {
-        findPrimeNumber(1000);
+        int reversedNumber = reverseNumbers(12367);
+        System.out.println(reversedNumber);
     }
 
-    private static void findPrimeNumber(int input) {
-
-        for (int i = 2; i <= input; i++) {
-            boolean isPrime = true;
-            for (int j = 2; j < i; j++) {
-                if (i % j == 0) {
-                    isPrime = false;
-                }
-            }
-            if (isPrime) {
-                System.out.println(i);
-            }
+    private static Integer reverseNumbers(int input) {
+        String reverse = "";
+        String stringifiedInput = Integer.toString(input);
+        for (int i = stringifiedInput.length()-1; i>=0; i--){
+           reverse += stringifiedInput.charAt(i);
         }
+
+        return Integer.parseInt(reverse);
     }
 
 }
