@@ -1,6 +1,6 @@
 public class ReverseNumbers {
     public static void main(String[] args) {
-        int Number = 111110000;
+        int Number =11111009;
         int reversedNumber = reverseNumbers(Math.abs(Number));
         if (Number < 0) {
             System.out.println("-" + reversedNumber);
@@ -16,13 +16,13 @@ public class ReverseNumbers {
      * @return reversed number
      */
     private static Integer reverseNumbers(int input) {
-        String reverse = "";
+        StringBuilder reverse = new StringBuilder();
         String stringifiedInput = Integer.toString(input);
         for (int i = stringifiedInput.length() - 1; i >= 0; i--) {
-            reverse += stringifiedInput.charAt(i);
+            reverse.append(stringifiedInput.charAt(i));
         }
 
-        return Integer.parseInt(reverse);
+        return Integer.parseInt(reverse.toString());
     }
 
 }
