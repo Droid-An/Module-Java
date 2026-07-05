@@ -10,7 +10,7 @@ public class  PrintPrimeNumbers{
 
         for (int i = 3; i <= input; i=i+2) {
             boolean isPrime = true;
-            for (int j = 3; j < i/2; j++) {
+            for (int j = 3; j < Math.sqrt(i); j++) {
                 if (i % j == 0) {
                     isPrime = false;
                     break;
