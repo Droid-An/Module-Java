@@ -27,7 +27,8 @@ class FileLogger {
 
     public static void main(String[] args) {
         ApplicationLogger ApplicationLogger = new ApplicationLogger();
-        ApplicationLogger.log();
+        ApplicationLogger.logInfo();
+        ApplicationLogger.logError();
 
     }
 }
