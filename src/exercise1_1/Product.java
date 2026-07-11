@@ -1,3 +1,5 @@
+package exercise1_1;
+
 /**
  * Class of a product
  * Stores name, price and stock count of the product
