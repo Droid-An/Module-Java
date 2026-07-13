@@ -4,8 +4,8 @@ public class Dog extends Animal{
     public Dog(String name) {
         super(name);
     }
-
-    public void bark(){
+@Override
+    public void makeSound(){
         System.out.println(getName()+" bark");
     }
 }

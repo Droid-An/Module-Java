@@ -10,6 +10,9 @@ public class Animal {
         this.name = name;
     }
 
+    public void makeSound() {
+    }
+
 }
 
 
