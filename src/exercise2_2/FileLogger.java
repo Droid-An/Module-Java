@@ -1,7 +1,5 @@
 package exercise2_2;
 
-import java.io.File;
-
 class FileLogger {
     private boolean fileOpen = false;
 
