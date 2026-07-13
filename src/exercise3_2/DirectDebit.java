@@ -1,7 +1,7 @@
 package exercise3_2;
 
-class DirectDebit extends PaymentMethod {
-    void pay(double amount) {
+public class DirectDebit extends PaymentMethod {
+    public void pay(double amount) {
         System.out.println("Transferring " + amount);
     }
 
