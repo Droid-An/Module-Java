@@ -4,6 +4,7 @@ import java.io.File;
 
 class FileLogger {
     private boolean fileOpen = false;
+
     public void openFile() {
         if (fileOpen) {
             throw new IllegalStateException("File already open");
@@ -11,12 +12,14 @@ class FileLogger {
         System.out.println("Opening log file...");
         fileOpen = true;
     }
+
     public void writeLine(String line) {
         if (!fileOpen) {
             throw new IllegalStateException("Cannot write - file not open");
         }
         System.out.println("LOG: " + line);
     }
+
     public void closeFile() {
         if (!fileOpen) {
             throw new IllegalStateException("File already closed");

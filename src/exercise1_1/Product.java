@@ -9,10 +9,11 @@ public class Product {
     private int price;
     private int stockCount;
 
-    public Product(String name, int price){
-        this(name,price,0);
+    public Product(String name, int price) {
+        this(name, price, 0);
     }
-    public Product(String name, int price,int stockCount){
+
+    public Product(String name, int price, int stockCount) {
         this.name = name;
         this.price = price;
         this.stockCount = stockCount;
@@ -47,11 +48,12 @@ public class Product {
      */
     @Override
     public String toString() {
-        return String.format("%s, %s, %d", this.name, this.price,this.stockCount);
+        return String.format("%s, %s, %d", this.name, this.price, this.stockCount);
     }
-    public static void main(String[] args){
-        Product first = new Product("abc",1);
-        Product second = new Product("deh",2,4);
+
+    public static void main(String[] args) {
+        Product first = new Product("abc", 1);
+        Product second = new Product("deh", 2, 4);
         System.out.println("name | price | count");
         System.out.println(first);
         System.out.println(second);

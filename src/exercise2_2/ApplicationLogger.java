@@ -2,7 +2,7 @@ package exercise2_2;
 
 public class ApplicationLogger {
 
-    public void logInfo(){
+    public void logInfo() {
         System.out.println("[INFO]");
         FileLogger FileLogger = new FileLogger();
         FileLogger.openFile();
@@ -10,7 +10,7 @@ public class ApplicationLogger {
         FileLogger.closeFile();
     }
 
-    public void logError(){
+    public void logError() {
         System.out.println("[ERROR]");
     }
 }
