@@ -11,6 +11,7 @@ public class Animal {
     }
 
     public void makeSound() {
+        System.out.println(getName()+ " animal doesn't make any specific sounds");
     }
 
 }
