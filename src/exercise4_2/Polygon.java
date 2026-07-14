@@ -1,4 +1,4 @@
-package exercise4_3;
+package exercise4_2;
 public final class Polygon {
     //if not initialized, I get an Error: Field 'numberOfSides' might not have been initialized
     private final int numberOfSides;
