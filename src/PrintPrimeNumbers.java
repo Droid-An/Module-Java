@@ -1,5 +1,5 @@
 /**
- * This class prints all prime numbers up to 1000.
+ * Prints all prime numbers up to 1000.
  */
 public class  PrintPrimeNumbers{
     public static void main(String[] args) {
