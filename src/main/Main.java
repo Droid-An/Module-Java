@@ -8,6 +8,20 @@ import tasks.TimedTask;
 import java.time.LocalDateTime;
 
 public class Main {
+
+    private static void logTasks(Task[] tasks) {
+        for (Task task : tasks) {
+            System.out.println(task.getStatus());
+        }
+    }
+
+    private static void showTasksByStatus(Task[] toDo, Task[] completed) {
+        System.out.println("To Do:");
+        logTasks(toDo);
+        System.out.println("Completed:");
+        logTasks(completed);
+    }
+
     public static void main(String[] args) {
 
         TaskManager taskManager = new TaskManager();
@@ -25,8 +39,11 @@ public class Main {
         taskManager.completeTask(eat.getId());
         taskManager.completeTask(sleep.getId());
 
-        System.out.println("To Do: \n" + taskManager.getTasksByStatus(false));
-        System.out.println("Completed \n" + taskManager.getTasksByStatus(true));
+        Task[] toDo = taskManager.getTasksByStatus(false);
+        Task[] completed = taskManager.getTasksByStatus(true);
+
+        showTasksByStatus(toDo, completed);
+
 
     }
 }
