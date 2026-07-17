@@ -33,7 +33,7 @@ final public class TaskManager {
         }
     }
 
-    public List<Task> getTasksByStatus(boolean completed) {
+    public Task[] getTasksByStatus(boolean completed) {
         List<Task> filteredList = new ArrayList<>();
         for (Task task : tasks) {
             if (task != null) {
@@ -41,8 +41,11 @@ final public class TaskManager {
                     filteredList.add(task);
                 }
             }
-
         }
-        return filteredList;
+        Task[] filteredArray = new Task[filteredList.size()];
+        for (int i = 0; i < filteredList.size(); i++) {
+            filteredArray[i] = filteredList.get(i);
+        }
+        return filteredArray;
     }
 }
