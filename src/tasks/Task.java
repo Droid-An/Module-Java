@@ -29,6 +29,10 @@ public class Task {
     public boolean isCompleted() {
         return completed;
     }
+
+    public String getStatus(){
+        return getDescription() + " (default task type)";
+    }
 }
 
 
