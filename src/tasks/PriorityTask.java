@@ -1,5 +1,7 @@
 package tasks;
-
+/**
+ * Task with priority
+ */
 public class PriorityTask extends Task {
     private final int priority;
 

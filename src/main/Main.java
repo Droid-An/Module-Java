@@ -7,6 +7,9 @@ import tasks.TimedTask;
 
 import java.time.LocalDateTime;
 
+/**
+ * Task manager demo
+ */
 public class Main {
 
     private static void logTasks(Task[] tasks) {

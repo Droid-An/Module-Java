@@ -5,6 +5,9 @@ import tasks.Task;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages an Array of 10 tasks
+ */
 final public class TaskManager {
     private static final Task[] tasks = new Task[10];
 
@@ -33,6 +36,11 @@ final public class TaskManager {
         }
     }
 
+    /**
+     * Print task info of tasks with certain "completed" status
+     * @param completed
+     * @return description, additional parameters
+     */
     public Task[] getTasksByStatus(boolean completed) {
         List<Task> filteredList = new ArrayList<>();
         for (Task task : tasks) {

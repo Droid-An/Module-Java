@@ -3,6 +3,9 @@ package tasks;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Task with deadline
+ */
 public class TimedTask extends Task {
     private final LocalDateTime deadline;
 
