@@ -12,6 +12,6 @@ public class PriorityTask extends Task {
 
     @Override
     public String getStatus(){
-        return getDescription() + " | priority: "+ priority + " (priority task type)";
+        return "ID: " + getId() + " | " + getDescription() + " | priority: " + priority + " (priority task type)";
     }
 }

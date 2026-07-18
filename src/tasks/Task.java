@@ -31,7 +31,7 @@ public class Task {
     }
 
     public String getStatus(){
-        return getDescription() + " (default task type)";
+        return "ID: " + getId() + " | " + getDescription() + " (default task type)";
     }
 }
 
