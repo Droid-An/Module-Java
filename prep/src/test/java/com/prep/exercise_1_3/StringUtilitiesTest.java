@@ -25,16 +25,11 @@ public class StringUtilitiesTest {
             assertTrue(stringUtilities.isPalindrome(arg));
         }
 
-        @Test
-        void no_palindrome() {
-            assertFalse(stringUtilities.isPalindrome("Cat"));
+        @ParameterizedTest(name = "{0} isn't a palindrome")
+        @ValueSource(strings = {"Cat", ""})
+        void string_is_not_palindrome(String arg) {
+            assertFalse(stringUtilities.isPalindrome(arg));
         }
-
-        @Test
-        void no_input() {
-            assertFalse(stringUtilities.isPalindrome(""));
-        }
-
 
     }
 
