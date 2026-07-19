@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class CalculatorTest {
-    private Calculator calculator = new Calculator();
+    final private Calculator calculator = new Calculator();
 
     // what's the difference between
     // declaring one calculator object to share between all tests
