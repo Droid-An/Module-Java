@@ -7,7 +7,7 @@ public class StringUtilities {
     public boolean isPalindrome(String s) {
         String regexp = "\\W";
         String cleaned = s.toLowerCase().replaceAll(regexp, "");
-        if (cleaned.length() == 0) {
+        if (cleaned.isEmpty()) {
             return false;
         }
         StringBuilder stringBuilder = new StringBuilder(cleaned);
