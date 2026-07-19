@@ -1,13 +1,19 @@
-package com.prep;
+package com.prep.exercise_1_2;
 
-import static java.lang.Double.NaN;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class CalculatorTest {
-    Calculator calculator = new Calculator();
+import static java.lang.Double.NaN;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+class CalculatorTest {
+    private Calculator calculator = new Calculator();
+
+    // what's the difference between
+    // declaring one calculator object to share between all tests
+    // and
+    // creating a new one every test?
     @BeforeEach
     void setUp() {
 

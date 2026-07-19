@@ -1,4 +1,4 @@
-package com.prep;
+package com.prep.exercise_1_2;
 
 public class Calculator {
     public int add(int a, int b) {
