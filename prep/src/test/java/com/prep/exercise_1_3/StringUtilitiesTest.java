@@ -4,6 +4,8 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,19 +18,11 @@ public class StringUtilitiesTest {
 
     @Nested
     class is_a_palindrome_test {
-        @Test
-        void one_word() {
-            assertTrue(stringUtilities.isPalindrome("radar"));
-        }
 
-        @Test
-        void sentence_with_punctuation() {
-            assertTrue(stringUtilities.isPalindrome("Sit on a potato pan, Otis."));
-        }
-
-        @Test
-        void sentence_without_punctuation() {
-            assertTrue(stringUtilities.isPalindrome("Taco cat"));
+        @ParameterizedTest(name = "{0} is a palindrome")
+        @ValueSource(strings = {"radar", "Sit on a potato pan, Otis.", "Taco cat"})
+        void string_is_palindrome(String arg) {
+            assertTrue(stringUtilities.isPalindrome(arg));
         }
 
         @Test
