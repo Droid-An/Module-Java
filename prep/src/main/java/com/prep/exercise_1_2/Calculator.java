@@ -13,6 +13,7 @@ public class Calculator {
         return a * b;
     }
 
+
     public int divide(int a, int b) {
         if (b == 0) {
             throw new IllegalArgumentException("Division by zero");
@@ -20,7 +21,7 @@ public class Calculator {
         return a / b;
     }
 
-    public double squareRoot(int a ){
+    public double squareRoot(int a) {
         return Math.sqrt(a);
     }
 
