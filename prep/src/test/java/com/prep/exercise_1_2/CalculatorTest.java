@@ -7,6 +7,11 @@ import static java.lang.Double.NaN;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+/**
+ * Tests for the Calculator class
+ *
+ * @see Calculator
+ */
 class CalculatorTest {
     final private Calculator calculator = new Calculator();
 
@@ -29,6 +34,11 @@ class CalculatorTest {
         assertEquals(4, calculator.subtract(6, 2));
     }
 
+    /**
+     * assert that Calculator throws IllegalArgumentException when divide by 0
+     *
+     * @see IllegalArgumentException
+     */
     @Test
     void testDivideByZeroThrows() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> calculator.divide(6, 0));
