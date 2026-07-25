@@ -15,7 +15,7 @@ public class AllTransactionsMonthlyStatement implements Statement {
         return """
                 - 10 bus
                 + 200 salary
-                - 50 mortgage 
+                - 50 mortgage
                 """;
     }
 }

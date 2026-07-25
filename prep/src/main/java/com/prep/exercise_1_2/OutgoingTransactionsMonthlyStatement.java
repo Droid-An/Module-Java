@@ -14,7 +14,7 @@ public class OutgoingTransactionsMonthlyStatement implements Statement {
     public String getStatement() {
         return """
                 - 10 bus
-                - 50 mortgage 
+                - 50 mortgage
                 """;
     }
 
