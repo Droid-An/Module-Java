@@ -14,8 +14,7 @@ public class StatementService {
      * @return statement
      */
     public AllTransactionsMonthlyStatement createAllTransactionsStatement() {
-        AllTransactionsMonthlyStatement allTransactionsMonthlyStatement = new AllTransactionsMonthlyStatement();
-        return allTransactionsMonthlyStatement;
+        return new AllTransactionsMonthlyStatement();
     }
 
     /**
@@ -24,8 +23,7 @@ public class StatementService {
      * @return statement
      */
     public OutgoingTransactionsMonthlyStatement createOutgoingTransactionsStatement() {
-        OutgoingTransactionsMonthlyStatement outgoingTransactionsMonthlyStatement = new OutgoingTransactionsMonthlyStatement();
-        return outgoingTransactionsMonthlyStatement;
+        return new OutgoingTransactionsMonthlyStatement();
     }
 
     public void sendStatements(Statement statement, StatementSender sender) {
