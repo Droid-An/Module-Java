@@ -12,6 +12,6 @@ public class EmailStatementSender implements StatementSender {
      */
     @Override
     public void sendStatement(String statementContent) {
-        System.out.println("Email sent");
+        System.out.println("Email sent" + ": " + statementContent);
     }
 }

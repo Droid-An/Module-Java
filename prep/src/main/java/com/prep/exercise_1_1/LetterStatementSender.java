@@ -12,6 +12,6 @@ public class LetterStatementSender implements StatementSender {
      */
     @Override
     public void sendStatement(String statementContent) {
-        System.out.println("Letter sent" + statementContent);
+        System.out.println("Letter sent" + ": " + statementContent);
     }
 }
