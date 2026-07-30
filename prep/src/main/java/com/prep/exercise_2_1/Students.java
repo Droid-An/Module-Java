@@ -22,14 +22,75 @@ public class Students {
         String[] firstNames = {"Anuket", "Eryn", "Filip", "Raquel", "Eryn"};
         String[] lastNames = {"Hassan", "Doe", "Pappas", "Hassan", "Jones"};
         int[] grades = {22, 45, 35, 23, 41};
+
         Students students = new Students(firstNames, lastNames, grades);
-        System.out.println(students.getFirstNames());
-        System.out.println(students.getDistinctFirstNames());
-        System.out.println(students.getDistinctFirstNamesInAlphabeticalOrder());
-        System.out.println(students.getLastNameToGrade());
-        System.out.println(students.getStudentToGrade());
+
+        List<String> firstNamesResult = students.getFirstNames();
+        Set<String> distinctFirstNamesResult = students.getDistinctFirstNames();
+        Set<String> distinctFirstNamesAlphabeticalResult = students.getDistinctFirstNamesInAlphabeticalOrder();
+        Map<String, Integer> lastNameToGradeResult = students.getLastNameToGrade();
+        Map<Student, Integer> studentToGradeResult = students.getStudentToGrade();
+
+        Student newStudent = new Student("Mike", "Sanchez");
+
+        firstNamesResult.add(newStudent.firstName());
+        distinctFirstNamesResult.add(newStudent.firstName());
+        distinctFirstNamesAlphabeticalResult.add(newStudent.firstName());
+        lastNameToGradeResult.put(newStudent.lastName(), 100);
+        studentToGradeResult.put(newStudent, 100);
+
+        System.out.println("new student joins:");
+        System.out.println(firstNamesResult);
+        System.out.println(distinctFirstNamesResult);
+        System.out.println(distinctFirstNamesAlphabeticalResult);
+        System.out.println(lastNameToGradeResult);
+        System.out.println(studentToGradeResult);
+
+        Student studentToRemove = null;
+
+        for (Student student : studentToGradeResult.keySet()) {
+            if (student.toString().equals("Filip Pappas")) {
+                studentToRemove = student;
+                break;
+            }
+        }
+
+        firstNamesResult.remove(studentToRemove.firstName());
+        distinctFirstNamesResult.remove(studentToRemove.firstName());
+        distinctFirstNamesAlphabeticalResult.remove(studentToRemove.firstName());
+        lastNameToGradeResult.remove(studentToRemove.lastName());
+        studentToGradeResult.remove(studentToRemove);
+
+        System.out.println("student leave:");
+        System.out.println(firstNamesResult);
+        System.out.println(distinctFirstNamesResult);
+        System.out.println(distinctFirstNamesAlphabeticalResult);
+        System.out.println(lastNameToGradeResult);
+        System.out.println(studentToGradeResult);
+
+        Student studentThatCheated = null;
+
+        for (Student student : studentToGradeResult.keySet()) {
+            if (student.toString().equals("Eryn Doe")) {
+                studentThatCheated = student;
+                break;
+            }
+        }
+
+        lastNameToGradeResult.put(studentThatCheated.firstName(), 0);
+        studentToGradeResult.put(studentThatCheated, 0);
+
+        System.out.println("student cheated:");
+        System.out.println(lastNameToGradeResult);
+        System.out.println(studentToGradeResult);
     }
 
+    /**
+     * Map student as Student object to grade
+     *
+     * @return Map of students mapped to grade
+     * @since 2.2
+     */
     public Map<Student, Integer> getStudentToGrade() {
 
         Map<Student, Integer> studentGradeMap = new HashMap<>();
@@ -47,8 +108,8 @@ public class Students {
      *
      * @return stringified Array of first names
      */
-    public String getFirstNames() {
-        return Arrays.toString(firstNames);
+    public List<String> getFirstNames() {
+        return new ArrayList<>(Arrays.asList(firstNames));
     }
 
     /**
@@ -57,7 +118,7 @@ public class Students {
      * @return Set of first names
      */
     public Set<String> getDistinctFirstNames() {
-        return new HashSet<>(List.of(firstNames));
+        return new HashSet<>(Arrays.asList(firstNames));
     }
 
     /**
@@ -67,7 +128,7 @@ public class Students {
      * @see TreeSet
      */
     public Set<String> getDistinctFirstNamesInAlphabeticalOrder() {
-        return new TreeSet<>(List.of(firstNames));
+        return new TreeSet<>(Arrays.asList(firstNames));
     }
 
     /**
