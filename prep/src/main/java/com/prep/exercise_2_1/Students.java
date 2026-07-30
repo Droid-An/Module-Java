@@ -33,10 +33,10 @@ public class Students {
 
         Student newStudent = new Student("Mike", "Sanchez");
 
-        firstNamesResult.add(newStudent.firstName());
-        distinctFirstNamesResult.add(newStudent.firstName());
-        distinctFirstNamesAlphabeticalResult.add(newStudent.firstName());
-        lastNameToGradeResult.put(newStudent.lastName(), 100);
+        firstNamesResult.add(newStudent.getFirstName());
+        distinctFirstNamesResult.add(newStudent.getFirstName());
+        distinctFirstNamesAlphabeticalResult.add(newStudent.getFirstName());
+        lastNameToGradeResult.put(newStudent.getLastName(), 100);
         studentToGradeResult.put(newStudent, 100);
 
         System.out.println("new student joins:");
@@ -55,10 +55,10 @@ public class Students {
             }
         }
 
-        firstNamesResult.remove(studentToRemove.firstName());
-        distinctFirstNamesResult.remove(studentToRemove.firstName());
-        distinctFirstNamesAlphabeticalResult.remove(studentToRemove.firstName());
-        lastNameToGradeResult.remove(studentToRemove.lastName());
+        firstNamesResult.remove(studentToRemove.getFirstName());
+        distinctFirstNamesResult.remove(studentToRemove.getFirstName());
+        distinctFirstNamesAlphabeticalResult.remove(studentToRemove.getFirstName());
+        lastNameToGradeResult.remove(studentToRemove.getLastName());
         studentToGradeResult.remove(studentToRemove);
 
         System.out.println("student leave:");
@@ -77,7 +77,7 @@ public class Students {
             }
         }
 
-        lastNameToGradeResult.put(studentThatCheated.firstName(), 0);
+        lastNameToGradeResult.put(studentThatCheated.getFirstName(), 0);
         studentToGradeResult.put(studentThatCheated, 0);
 
         System.out.println("student cheated:");
