@@ -57,8 +57,7 @@ public class Students {
      * @return Set of first names
      */
     public Set<String> getDistinctFirstNames() {
-        Set<String> uniqueNames = new HashSet<>();
-        uniqueNames.addAll(List.of(firstNames));
+        Set<String> uniqueNames = new HashSet<>(List.of(firstNames));
         return uniqueNames;
     }
 
@@ -69,9 +68,9 @@ public class Students {
      * @see TreeSet
      */
     public Set<String> getDistinctFirstNamesInAlphabeticalOrder() {
-        Set<String> treeSet = new TreeSet();
-        treeSet.addAll(List.of(firstNames));
+        Set<String> treeSet = new TreeSet<>(List.of(firstNames));
         return treeSet;
+
     }
 
     /**
