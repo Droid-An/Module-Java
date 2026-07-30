@@ -41,6 +41,7 @@ public class StatementDeliveryService {
 
     /**
      * Deliver statement
+     *
      * @param statementContent Statement content in String type
      * @param statementSender  Sender to use
      * @since 1.1
