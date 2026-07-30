@@ -57,8 +57,7 @@ public class Students {
      * @return Set of first names
      */
     public Set<String> getDistinctFirstNames() {
-        Set<String> uniqueNames = new HashSet<>(List.of(firstNames));
-        return uniqueNames;
+        return new HashSet<>(List.of(firstNames));
     }
 
     /**
@@ -68,9 +67,7 @@ public class Students {
      * @see TreeSet
      */
     public Set<String> getDistinctFirstNamesInAlphabeticalOrder() {
-        Set<String> treeSet = new TreeSet<>(List.of(firstNames));
-        return treeSet;
-
+        return new TreeSet<>(List.of(firstNames));
     }
 
     /**
@@ -78,7 +75,7 @@ public class Students {
      * <p>
      * If there are some duplicate lastNames, only last one will be mapped
      *
-     * @return Set of first names
+     * @return Map of first names
      */
     public Map<String, Integer> getLastNameToGrade() {
         Map<String, Integer> lastNameToGrade = new HashMap<>();
