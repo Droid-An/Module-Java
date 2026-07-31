@@ -1,22 +1,7 @@
 package com.prep.exercise_2_2;
 
 
-public class Student {
-    private final String firstName;
-    private final String lastName;
-
-    public Student(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
+public record Student(String firstName, String lastName) {
 
     @Override
     public String toString() {

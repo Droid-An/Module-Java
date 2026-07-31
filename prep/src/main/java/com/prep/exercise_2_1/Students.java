@@ -4,6 +4,8 @@ import com.prep.exercise_2_2.Student;
 
 import java.util.*;
 
+import static java.util.Arrays.asList;
+
 /**
  * Print students names and their grades in different formats
  */
@@ -25,6 +27,9 @@ public class Students {
 
         Students students = new Students(firstNames, lastNames, grades);
 
+        System.out.println("Highest: " + students.findHighestGrade());
+        System.out.println("lowest: " + students.findLowestGrade());
+        System.out.println(students.StudentWithHighestGrade());
         List<String> firstNamesResult = students.getFirstNames();
         Set<String> distinctFirstNamesResult = students.getDistinctFirstNames();
         Set<String> distinctFirstNamesAlphabeticalResult = students.getDistinctFirstNamesInAlphabeticalOrder();
@@ -33,10 +38,10 @@ public class Students {
 
         Student newStudent = new Student("Mike", "Sanchez");
 
-        firstNamesResult.add(newStudent.getFirstName());
-        distinctFirstNamesResult.add(newStudent.getFirstName());
-        distinctFirstNamesAlphabeticalResult.add(newStudent.getFirstName());
-        lastNameToGradeResult.put(newStudent.getLastName(), 100);
+        firstNamesResult.add(newStudent.firstName());
+        distinctFirstNamesResult.add(newStudent.firstName());
+        distinctFirstNamesAlphabeticalResult.add(newStudent.firstName());
+        lastNameToGradeResult.put(newStudent.lastName(), 100);
         studentToGradeResult.put(newStudent, 100);
 
         System.out.println("new student joins:");
@@ -55,10 +60,10 @@ public class Students {
             }
         }
 
-        firstNamesResult.remove(studentToRemove.getFirstName());
-        distinctFirstNamesResult.remove(studentToRemove.getFirstName());
-        distinctFirstNamesAlphabeticalResult.remove(studentToRemove.getFirstName());
-        lastNameToGradeResult.remove(studentToRemove.getLastName());
+        firstNamesResult.remove(studentToRemove.firstName());
+        distinctFirstNamesResult.remove(studentToRemove.firstName());
+        distinctFirstNamesAlphabeticalResult.remove(studentToRemove.firstName());
+        lastNameToGradeResult.remove(studentToRemove.lastName());
         studentToGradeResult.remove(studentToRemove);
 
         System.out.println("student leave:");
@@ -77,7 +82,7 @@ public class Students {
             }
         }
 
-        lastNameToGradeResult.put(studentThatCheated.getFirstName(), 0);
+        lastNameToGradeResult.put(studentThatCheated.firstName(), 0);
         studentToGradeResult.put(studentThatCheated, 0);
 
         System.out.println("student cheated:");
@@ -109,7 +114,7 @@ public class Students {
      * @return stringified Array of first names
      */
     public List<String> getFirstNames() {
-        return new ArrayList<>(Arrays.asList(firstNames));
+        return new ArrayList<>(asList(firstNames));
     }
 
     /**
@@ -118,7 +123,7 @@ public class Students {
      * @return Set of first names
      */
     public Set<String> getDistinctFirstNames() {
-        return new HashSet<>(Arrays.asList(firstNames));
+        return new HashSet<>(asList(firstNames));
     }
 
     /**
@@ -128,7 +133,7 @@ public class Students {
      * @see TreeSet
      */
     public Set<String> getDistinctFirstNamesInAlphabeticalOrder() {
-        return new TreeSet<>(Arrays.asList(firstNames));
+        return new TreeSet<>(asList(firstNames));
     }
 
     /**
@@ -145,4 +150,29 @@ public class Students {
         }
         return lastNameToGrade;
     }
+
+
+    public TreeSet turnGradesIntoTreeSet() {
+        Integer[] gradesIntegers = new Integer[grades.length];
+        Arrays.setAll(gradesIntegers, i -> grades[i]);
+        TreeSet<Integer> treeSetOfGrades = new TreeSet<>((asList(gradesIntegers)));
+        return treeSetOfGrades;
+    }
+
+    public Integer findHighestGrade() {
+        TreeSet<Integer> treeSetOfGrades = turnGradesIntoTreeSet();
+        return treeSetOfGrades.last();
+    }
+
+    public Integer findLowestGrade() {
+        TreeSet<Integer> treeSetOfGrades = turnGradesIntoTreeSet();
+        return treeSetOfGrades.first();
+    }
+
+    public Map.Entry<Student, Integer> StudentWithHighestGrade() {
+        List<Map.Entry<Student, Integer>> list = new ArrayList<>(getStudentToGrade().entrySet());
+        list.sort(Map.Entry.comparingByValue());
+        return list.get(list.size() - 1);
+    }
+
 }
