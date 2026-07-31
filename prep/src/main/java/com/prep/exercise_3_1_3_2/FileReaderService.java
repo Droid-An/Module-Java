@@ -18,18 +18,18 @@ public class FileReaderService {
      * Demo method to show how errors are handled
      */
     public static void main(String[] args) {
-        List files = Arrays.asList(
+        List<Object> files = Arrays.asList(
                 "prep/src/main/resources/dummyData.txt",
                 null,
                 "prep/src/main/resources/notExisting.txt",
                 "prep/src/main/resources/emptyFile.txt"
         );
         FileReaderService fileReaderService = new FileReaderService();
-        for (int i = 0; i < files.size(); i++) {
+        for (Object file : files) {
             try {
-                System.out.println(fileReaderService.readFile((String) files.get(i)));
+                System.out.println(fileReaderService.readFile((String) file));
             } catch (Exception e) {
-                System.err.println(e.fillInStackTrace());
+                System.err.println(e);
             }
         }
 
@@ -41,9 +41,8 @@ public class FileReaderService {
      * @param filename Name of the file to read
      * @return File content
      * @throws InvalidFileFormatException when file is empty
-     * @throws IOException                when problem with reading file
-     * @throws FileNotFoundException
      * @throws NullPointerException
+     * @throws RuntimeException
      */
     public String readFile(String filename) {
         Objects.requireNonNull(filename, "Filename must not be null");
