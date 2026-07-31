@@ -60,11 +60,14 @@ public class Students {
             }
         }
 
-        firstNamesResult.remove(studentToRemove.firstName());
-        distinctFirstNamesResult.remove(studentToRemove.firstName());
-        distinctFirstNamesAlphabeticalResult.remove(studentToRemove.firstName());
-        lastNameToGradeResult.remove(studentToRemove.lastName());
-        studentToGradeResult.remove(studentToRemove);
+        if (studentToRemove != null) {
+            firstNamesResult.remove(studentToRemove.firstName());
+            distinctFirstNamesResult.remove(studentToRemove.firstName());
+            distinctFirstNamesAlphabeticalResult.remove(studentToRemove.firstName());
+            lastNameToGradeResult.remove(studentToRemove.lastName());
+            studentToGradeResult.remove(studentToRemove);
+        }
+
 
         System.out.println("student leave:");
         System.out.println(firstNamesResult);
@@ -82,8 +85,10 @@ public class Students {
             }
         }
 
-        lastNameToGradeResult.put(studentThatCheated.firstName(), 0);
-        studentToGradeResult.put(studentThatCheated, 0);
+        if (studentThatCheated != null) {
+            lastNameToGradeResult.put(studentThatCheated.firstName(), 0);
+            studentToGradeResult.put(studentThatCheated, 0);
+        }
 
         System.out.println("student cheated:");
         System.out.println(lastNameToGradeResult);
@@ -152,11 +157,10 @@ public class Students {
     }
 
 
-    public TreeSet turnGradesIntoTreeSet() {
+    public TreeSet<Integer> turnGradesIntoTreeSet() {
         Integer[] gradesIntegers = new Integer[grades.length];
         Arrays.setAll(gradesIntegers, i -> grades[i]);
-        TreeSet<Integer> treeSetOfGrades = new TreeSet<>((asList(gradesIntegers)));
-        return treeSetOfGrades;
+        return new TreeSet<>((asList(gradesIntegers)));
     }
 
     public Integer findHighestGrade() {
