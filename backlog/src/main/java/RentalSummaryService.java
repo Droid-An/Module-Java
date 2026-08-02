@@ -1,7 +1,27 @@
 import java.time.LocalDate;
 import java.util.Optional;
 
+/**
+ * Generates and prints rental summaries for car lease {@link Contract}s.
+ * <p>
+ * A rental summary includes the customer's details, the contract's start
+ * and end dates, the full list of rentals, the next outstanding rental,
+ * total capital and interest, and the number of remaining unpaid rentals.
+ * If a contract has already run its full term, a completion message is
+ * printed instead of the summary.
+ *
+ * @see RentalSummary
+ * @see Contract
+ */
 public class RentalSummaryService {
+
+    /**
+     * Demonstrates generating and printing rental summaries for a range of
+     * contracts, including a contract with an unsupported length and a
+     * contract that has already completed.
+     *
+     * @param args not used
+     */
     public static void main(String[] args) {
 
         Contract oneYearContract = new Contract("John Smith", 25, LocalDate.of(2025, 8, 12), 1, 10000);
@@ -16,10 +36,39 @@ public class RentalSummaryService {
         rentalSummaryService.printRentalSummary(completedContract); // Should print a message to say the contract is complete
     }
 
+    /**
+     * Builds a {@link RentalSummary} for the given contract.
+     *
+     * @param contract the contract to summarize
+     * @return an {@link Optional} containing the generated summary; always
+     *         present, since {@link RentalSummary}'s constructor either
+     *         succeeds or throws
+     */
     private Optional<RentalSummary> generateRentalSummary(Contract contract) {
-        return Optional.ofNullable(new RentalSummary(contract));
+        return Optional.of(new RentalSummary(contract));
     }
 
+    /**
+     * Prints a rental summary for the given contract to the console.
+     * <p>
+     * The printed summary contains:
+     * <ul>
+     *     <li>the customer's name and age</li>
+     *     <li>the contract's start and end dates</li>
+     *     <li>all rentals for the contract</li>
+     *     <li>the next outstanding rental, if any</li>
+     *     <li>the total capital and interest for the contract</li>
+     *     <li>the number of remaining unpaid rentals</li>
+     * </ul>
+     * If the contract's end date has already passed, a completion message
+     * is printed instead of the full summary.
+     * <p>
+     * Any error encountered while generating the summary (for example, an
+     * unsupported contract length) is caught and logged to the error
+     * console rather than propagating to the caller.
+     *
+     * @param contract the contract to print a summary for
+     */
     void printRentalSummary(Contract contract) {
         try {
             RentalSummaryService rentalSummaryService = new RentalSummaryService();
