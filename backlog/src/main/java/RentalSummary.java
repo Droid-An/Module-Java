@@ -1,26 +1,56 @@
+import java.security.InvalidParameterException;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class RentalSummary {
     List<Rental> rentals;
-    Contract contract;
-    String customerName;
-    String customerAge;
-    String startDate;
-    String endDate;
+    LocalDate endDate;
+    Optional<Rental> nextRental;
+    double totalCapital;
+    double totalInterest;
+    long numberOfRemainingRentals;
+
 
     public RentalSummary(Contract contract) {
-        this.contract = contract;
+        this.endDate = contract.startDate.plusYears(contract.getContractLengthYears());
+        if (contract.getContractLengthYears() == 1) {
+            OneYearContractRentalGenerator oneYearContractRentalGenerator = new OneYearContractRentalGenerator();
+            this.rentals = oneYearContractRentalGenerator.generateRentals(contract);
+        } else if (contract.getContractLengthYears() == 3) {
+            ThreeYearContractRentalGenerator threeYearContractRentalGenerator = new ThreeYearContractRentalGenerator();
+            this.rentals = threeYearContractRentalGenerator.generateRentals(contract);
+        } else {
+            throw new InvalidParameterException("Contract length isn't 1 or 3");
+        }
+        this.nextRental = rentals.stream()
+                .filter(rental -> !rental.isPaid()).findFirst();
+        this.totalCapital = contract.getCarPrice();
+        this.totalInterest = contract.getCarPrice() / 100 * 2;
+        this.numberOfRemainingRentals = rentals.stream()
+                .filter(rental -> !rental.isPaid()).count();
     }
 
-}
+    public List<Rental> getRentals() {
+        return rentals;
+    }
+    public LocalDate getEndDate() {
+        return endDate;
+    }
 
-//The system should log the rental summary to the console, printed in a human-readable format.
-//The summary information should contain:
-//The customer’s name and age
-//The dates of the contract i.e. start and end date
-//All rentals, sorted by due date
-//The next due rental
-//The total amount of capital and interest on the contract
-//The number of remaining outstanding rentals
-//If the contract is complete, i.e. the current date is after the final rental due due, then no summary should be printed.
-// Instead the console should print a message to say the contract is completed.
+    public Optional<Rental> getNextRental() {
+        return nextRental;
+    }
+
+    public double getTotalCapital() {
+        return totalCapital;
+    }
+
+    public double getTotalInterest() {
+        return totalInterest;
+    }
+
+    public long getNumberOfRemainingRentals() {
+        return numberOfRemainingRentals;
+    }
+}

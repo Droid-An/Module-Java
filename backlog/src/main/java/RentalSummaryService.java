@@ -17,12 +17,31 @@ public class RentalSummaryService {
     }
 
     private Optional<RentalSummary> generateRentalSummary(Contract contract) {
-        return Optional.of(new RentalSummary(contract));
+        return Optional.ofNullable(new RentalSummary(contract));
     }
 
     void printRentalSummary(Contract contract) {
-        RentalSummaryService rentalSummaryService = new RentalSummaryService();
-        System.out.println(rentalSummaryService.generateRentalSummary(contract));
+        try {
+            RentalSummaryService rentalSummaryService = new RentalSummaryService();
+            RentalSummary rentalSummary = (rentalSummaryService.generateRentalSummary(contract).orElseThrow());
+            System.out.printf("%n--------------------------------------------%n");
+            if (rentalSummary.getEndDate().isBefore(LocalDate.now())) {
+                System.out.println("Contract is completed");
+            } else {
+                System.out.printf("Rental summary for %s, %d%n", contract.getCustomerName(), contract.getCustomerAge());
+                System.out.printf("Contract: %1$tA, %1td %1$tB %1$tY - %2$tA, %1td %2$tB %2$tY%n", contract.getStartDate(), rentalSummary.getEndDate());
+                System.out.printf("All rentals:%n");
+                rentalSummary.getRentals().forEach(rental -> System.out.println(rental.toString()));
+                rentalSummary.getNextRental().ifPresentOrElse(
+                        nextRental -> System.out.printf("Next rental %s%n", nextRental),
+                        () -> System.out.println("No upcoming rentals — contract complete.")
+                );
+                System.out.printf("Total amount of capital %f%n", rentalSummary.getTotalCapital());
+                System.out.printf("Total interest %f%n", rentalSummary.getTotalInterest());
+                System.out.printf("Remaining rentals %d%n", rentalSummary.getNumberOfRemainingRentals());
+            }
+        } catch (Exception e){
+            System.err.println(e);
+        }
     }
-
 }
