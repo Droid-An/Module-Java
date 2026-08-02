@@ -1,0 +1,23 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.myname</groupId>
+  <artifactId>logging-example</artifactId>
+  <name>Example project with logging</name>
+  <version>1.0.0</version>
+  <dependencies>
+<!--    Note that most logging implementations will automatically pull-in slf4j-api as a dependency.
+ However, it is often a good idea to declare an explicit dependency to slf4j-api
+  in order to fix the correct version of slf4j-api your project
+  by virtue of Maven's "nearest definition" dependency mediation rule.-->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>2.0.18</version>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.5.32</version>
+    </dependency>
+  </dependencies>
+</project>
