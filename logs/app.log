@@ -1,0 +1,42 @@
+2026-08-02 23:40:38 [main] INFO  [a830e38b-6202-4513-8743-d60397e0da50] exercise._1_2.RequestProcessor - Processing request 1
+2026-08-02 23:40:38 [main] INFO  [98e7692d-372c-4d49-8309-d3da07800955] exercise._1_2.RequestProcessor - Processing request 2
+2026-08-02 23:40:38 [main] ERROR [98e7692d-372c-4d49-8309-d3da07800955] exercise._1_2.RequestProcessor - Error while processing
+java.lang.IllegalArgumentException: Bad input!
+	at exercise._1_2.RequestProcessor.simulateRequest(RequestProcessor.java:30)
+	at exercise._1_2.RequestProcessor.main(RequestProcessor.java:14)
+2026-08-02 23:40:38 [main] INFO  [643e4a93-1c09-432e-9ac5-5d2f289c22d6] exercise._1_2.RequestProcessor - Processing request 3
+2026-08-02 23:41:41 [main] INFO  [55f47609-4e40-49b8-9b27-0c687dba55b1] exercise._1_2.RequestProcessor - Processing request 1
+2026-08-02 23:41:41 [main] INFO  [6e23280a-f9b9-4794-beb2-ca52ea766193] exercise._1_2.RequestProcessor - Processing request 2
+2026-08-02 23:41:41 [main] ERROR [6e23280a-f9b9-4794-beb2-ca52ea766193] exercise._1_2.RequestProcessor - Error while processing
+java.lang.IllegalArgumentException: Bad input!
+	at exercise._1_2.RequestProcessor.simulateRequest(RequestProcessor.java:30)
+	at exercise._1_2.RequestProcessor.main(RequestProcessor.java:14)
+2026-08-02 23:41:41 [main] INFO  [530cfd38-4609-4377-b4ad-0e2329933fd3] exercise._1_2.RequestProcessor - Processing request 3
+2026-08-02 23:42:03 [main] INFO  [fed72620-75dd-444a-98a4-969f675b7be3] exercise._1_2.RequestProcessor - Processing request 1
+2026-08-02 23:42:03 [main] INFO  [abc1dd26-c803-4f5a-b8d4-cbb7e6ee20e7] exercise._1_2.RequestProcessor - Processing request 2
+2026-08-02 23:42:03 [main] ERROR [abc1dd26-c803-4f5a-b8d4-cbb7e6ee20e7] exercise._1_2.RequestProcessor - Error while processing
+java.lang.IllegalArgumentException: Bad input!
+	at exercise._1_2.RequestProcessor.simulateRequest(RequestProcessor.java:30)
+	at exercise._1_2.RequestProcessor.main(RequestProcessor.java:14)
+2026-08-02 23:42:03 [main] INFO  [1eab9d16-1267-4473-82a9-308b5663345c] exercise._1_2.RequestProcessor - Processing request 3
+2026-08-02 23:42:34 [main] INFO  [bd4011b3-54db-4047-aca2-90bb3bf454fd] exercise._1_2.RequestProcessor - Processing request 1
+2026-08-02 23:42:34 [main] INFO  [d9175347-4397-4f4e-9322-1dc9ab989579] exercise._1_2.RequestProcessor - Processing request 2
+2026-08-02 23:42:34 [main] ERROR [d9175347-4397-4f4e-9322-1dc9ab989579] exercise._1_2.RequestProcessor - Error while processing
+java.lang.IllegalArgumentException: Bad input!
+	at exercise._1_2.RequestProcessor.simulateRequest(RequestProcessor.java:30)
+	at exercise._1_2.RequestProcessor.main(RequestProcessor.java:14)
+2026-08-02 23:42:34 [main] INFO  [7059a4a4-d132-48dd-8f7c-45d0a3c63d65] exercise._1_2.RequestProcessor - Processing request 3
+2026-08-02 23:42:52 [main] INFO  [d61bb68c-5279-4721-91f7-654ce42c4359] exercise._1_2.RequestProcessor - Processing request 1
+2026-08-02 23:42:52 [main] INFO  [c042c033-fbc6-407c-8c0d-02b5dad4919a] exercise._1_2.RequestProcessor - Processing request 2
+2026-08-02 23:42:52 [main] ERROR [c042c033-fbc6-407c-8c0d-02b5dad4919a] exercise._1_2.RequestProcessor - Error while processing
+java.lang.IllegalArgumentException: Bad input!
+	at exercise._1_2.RequestProcessor.simulateRequest(RequestProcessor.java:30)
+	at exercise._1_2.RequestProcessor.main(RequestProcessor.java:14)
+2026-08-02 23:42:52 [main] INFO  [b6571699-3f32-407a-84b4-2b739507f28d] exercise._1_2.RequestProcessor - Processing request 3
+2026-08-02 23:43:33 [main] INFO  [73492694-eb09-4f38-bc66-4d92a11e7276] exercise._1_2.RequestProcessor - Processing request 1
+2026-08-02 23:43:33 [main] INFO  [07ded1cf-5d4f-452c-820d-0bd0cebb18d4] exercise._1_2.RequestProcessor - Processing request 2
+2026-08-02 23:43:33 [main] ERROR [07ded1cf-5d4f-452c-820d-0bd0cebb18d4] exercise._1_2.RequestProcessor - Error while processing
+java.lang.IllegalArgumentException: Bad input!
+	at exercise._1_2.RequestProcessor.simulateRequest(RequestProcessor.java:30)
+	at exercise._1_2.RequestProcessor.main(RequestProcessor.java:14)
+2026-08-02 23:43:33 [main] INFO  [be16ee72-8605-4851-9340-7fd782bbf0dc] exercise._1_2.RequestProcessor - Processing request 3
