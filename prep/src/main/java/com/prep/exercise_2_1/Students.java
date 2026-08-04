@@ -3,6 +3,7 @@ package com.prep.exercise_2_1;
 import com.prep.exercise_2_2.Student;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
 
@@ -27,9 +28,6 @@ public class Students {
 
         Students students = new Students(firstNames, lastNames, grades);
 
-        System.out.println("Highest: " + students.findHighestGrade());
-        System.out.println("lowest: " + students.findLowestGrade());
-        System.out.println(students.StudentWithHighestGrade());
         List<String> firstNamesResult = students.getFirstNames();
         Set<String> distinctFirstNamesResult = students.getDistinctFirstNames();
         Set<String> distinctFirstNamesAlphabeticalResult = students.getDistinctFirstNamesInAlphabeticalOrder();
@@ -93,6 +91,11 @@ public class Students {
         System.out.println("student cheated:");
         System.out.println(lastNameToGradeResult);
         System.out.println(studentToGradeResult);
+
+        System.out.println("Highest: " + students.findHighestGrade());
+        System.out.println("lowest: " + students.findLowestGrade());
+        System.out.println(students.StudentWithHighestGrade());
+        System.out.println(students.getFirstNameDuplicates());
     }
 
     /**
@@ -114,7 +117,7 @@ public class Students {
     }
 
     /**
-     * Print only first names
+     * Return only first names
      *
      * @return stringified Array of first names
      */
@@ -123,7 +126,7 @@ public class Students {
     }
 
     /**
-     * Print only unique first names
+     * Return only unique first names
      *
      * @return Set of first names
      */
@@ -132,7 +135,7 @@ public class Students {
     }
 
     /**
-     * Print only unique first names in an Alphabetical order
+     * Return only unique first names in alphabetical order
      *
      * @return Set of first names sorted with TreeSet
      * @see TreeSet
@@ -142,7 +145,7 @@ public class Students {
     }
 
     /**
-     * Print last names mapped to grades
+     * Return last names mapped to grades
      * <p>
      * If there are some duplicate lastNames, only last one will be mapped
      *
@@ -156,7 +159,11 @@ public class Students {
         return lastNameToGrade;
     }
 
-
+    /**
+     * Helper function to get unique grades sorted from lowest to highest
+     *
+     * @return unique grades sorted from lowest to highest
+     */
     public TreeSet<Integer> turnGradesIntoTreeSet() {
         Integer[] gradesIntegers = new Integer[grades.length];
         Arrays.setAll(gradesIntegers, i -> grades[i]);
@@ -173,10 +180,27 @@ public class Students {
         return treeSetOfGrades.first();
     }
 
+    /**
+     * Return map entry with Student object with the highest grade
+     */
     public Map.Entry<Student, Integer> StudentWithHighestGrade() {
         List<Map.Entry<Student, Integer>> list = new ArrayList<>(getStudentToGrade().entrySet());
         list.sort(Map.Entry.comparingByValue());
         return list.get(list.size() - 1);
+    }
+
+    /**
+     * Get list of names that belong to more than one student
+     *
+     * @return Set of duplicated names
+     */
+    public Set<String> getFirstNameDuplicates() {
+        Set<String> elements = new HashSet<>();
+        return Arrays.stream(firstNames)
+                .filter(n -> !elements.add(n))
+                .collect(Collectors.toSet());
+
+
     }
 
 }
