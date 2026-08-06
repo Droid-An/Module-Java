@@ -31,9 +31,7 @@ final public class TaskManager {
 
     public void completeTask(int id) {
         for (Task task : tasks) {
-
-            if (task != null) {
-                if (task.getId() == id) {
+            if (task != null && task.getId() == id) {
                     task.completeTask();
                 }
             }
@@ -51,8 +49,7 @@ final public class TaskManager {
     public Task[] getTasksByStatus(boolean completed) {
         List<Task> filteredList = new ArrayList<>();
         for (Task task : tasks) {
-            if (task != null) {
-                if (task.isCompleted() == completed) {
+            if (task != null && task.isCompleted() == completed) {
                     filteredList.add(task);
                 }
             }
