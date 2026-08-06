@@ -14,7 +14,7 @@ public class Main {
 
     private static void logTasks(Task[] tasks) {
         for (Task task : tasks) {
-            System.out.println(task.getStatus());
+            System.out.println(task.toString());
         }
     }
 
@@ -38,7 +38,6 @@ public class Main {
 
         PriorityTask prioritisedTask = new PriorityTask("repeat", 2);
         taskManager.addTask(prioritisedTask);
-
         taskManager.completeTask(eat.getId());
         taskManager.completeTask(sleep.getId());
 

@@ -30,7 +30,7 @@ public class Task {
         return completed;
     }
 
-    public String getStatus(){
+    public String toString(){
         return "ID: " + getId() + " | " + getDescription() + " (default task type)";
     }
 }
