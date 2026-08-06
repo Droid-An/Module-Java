@@ -14,7 +14,8 @@ public class TimedTask extends Task {
         this.deadline = deadline;
     }
 
-    @Override public String toString(){
+    @Override
+    public String toString() {
         return "ID: " + getId() + " | " + getDescription() + " | due by: " + deadline.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + " (timed task type)";
     }
 

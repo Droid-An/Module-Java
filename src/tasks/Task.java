@@ -3,8 +3,8 @@ package tasks;
 public class Task {
     private static int TaskCounter;
     private final int id;
-    private boolean completed = false;
     private final String description;
+    private boolean completed = false;
 
     public Task(String description) {
         TaskCounter++;
@@ -30,7 +30,7 @@ public class Task {
         return completed;
     }
 
-    public String toString(){
+    public String toString() {
         return "ID: " + getId() + " | " + getDescription() + " (default task type)";
     }
 }

@@ -1,4 +1,5 @@
 package tasks;
+
 /**
  * Task with priority
  */
@@ -11,7 +12,7 @@ public class PriorityTask extends Task {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "ID: " + getId() + " | " + getDescription() + " | priority: " + priority + " (priority task type)";
     }
 }

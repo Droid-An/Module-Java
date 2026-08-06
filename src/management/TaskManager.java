@@ -26,14 +26,14 @@ final public class TaskManager {
 
     /**
      * Make task with specific ID ompleted
+     *
      * @param id of the task to mark as completed
      */
 
     public void completeTask(int id) {
         for (Task task : tasks) {
             if (task != null && task.getId() == id) {
-                    task.completeTask();
-                }
+                task.completeTask();
             }
 
         }
@@ -41,8 +41,9 @@ final public class TaskManager {
 
     /**
      * Return tasks based on completion status
-     *  @param completed {@code true} to include only completed tasks,
-     *                   {@code false} to include only incomplete tasks
+     *
+     * @param completed {@code true} to include only completed tasks,
+     *                  {@code false} to include only incomplete tasks
      * @return array of filtered Tasks
      * @see Task
      */
@@ -50,8 +51,7 @@ final public class TaskManager {
         List<Task> filteredList = new ArrayList<>();
         for (Task task : tasks) {
             if (task != null && task.isCompleted() == completed) {
-                    filteredList.add(task);
-                }
+                filteredList.add(task);
             }
         }
         return filteredList.toArray(new Task[0]);
