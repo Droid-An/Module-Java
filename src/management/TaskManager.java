@@ -54,10 +54,6 @@ final public class TaskManager {
                 }
             }
         }
-        Task[] filteredArray = new Task[filteredList.size()];
-        for (int i = 0; i < filteredList.size(); i++) {
-            filteredArray[i] = filteredList.get(i);
-        }
-        return filteredArray;
+        return filteredList.toArray(new Task[0]);
     }
 }
