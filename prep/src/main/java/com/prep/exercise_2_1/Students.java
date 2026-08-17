@@ -52,7 +52,8 @@ public class Students {
         Student studentToRemove = null;
 
         for (Student student : studentToGradeResult.keySet()) {
-            if (student.toString().equals("Filip Pappas")) {
+            if (student.toString()
+                    .equals("Filip Pappas")) {
                 studentToRemove = student;
                 break;
             }
@@ -77,7 +78,8 @@ public class Students {
         Student studentThatCheated = null;
 
         for (Student student : studentToGradeResult.keySet()) {
-            if (student.toString().equals("Eryn Doe")) {
+            if (student.toString()
+                    .equals("Eryn Doe")) {
                 studentThatCheated = student;
                 break;
             }

@@ -29,9 +29,11 @@ public class PaymentHandler {
      * @see <a href="https://curriculum.codeyourfuture.io/tracks/java/sprints/4/prep/#exceptions">Original pseudocode from 3.3</a>
      */
     void processPayment(Payment payment) {
-        if (payment.getType().equals("Card"))
+        if (payment.getType()
+                .equals("Card"))
             cardProcessor.process(payment);
-        else if (payment.getType().equals("Cash")) {
+        else if (payment.getType()
+                .equals("Cash")) {
             cashProcessor.process(payment);
         }
     }
