@@ -26,14 +26,12 @@ public class NameFinder {
 
         //streams approach
 
-        List<String> filteredNames = names.stream()
+        return names.stream()
                 .filter(name -> vowels.contains(name.substring(0, 1)))
                 .map(name -> name.substring(0, 1)
                         .toUpperCase() + name.substring(1))
                 .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
-
-        return filteredNames;
     }
 
     public void printNamesStartingWithA(Collection<String> names) {
