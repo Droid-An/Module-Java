@@ -1,3 +1,6 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.security.InvalidParameterException;
 import java.time.LocalDate;
 import java.util.List;
@@ -14,6 +17,8 @@ import java.util.Optional;
  * is not supported and results in an exception.
  */
 public class RentalSummary {
+    private static final Logger log = LoggerFactory.getLogger(RentalSummary.class);
+
     final List<Rental> rentals;
     final LocalDate endDate;
     final Optional<Rental> nextRental;
@@ -28,7 +33,7 @@ public class RentalSummary {
      * @param contract the contract to summarize; must have a supported
      *                 contract length (1 or 3 years)
      * @throws InvalidParameterException if the contract length is neither
-     *                                    1 nor 3 years
+     *                                   1 nor 3 years
      */
     public RentalSummary(Contract contract) throws InvalidContractLengthException {
         if (contract.getContractLengthYears() == 1) {
@@ -41,11 +46,16 @@ public class RentalSummary {
             log.error("Contract length {} isn't equal 1 or 3", contract.getContractLengthYears());
             throw new InvalidContractLengthException("Contract length isn't 1 or 3");
         }
+        this.endDate = contract.getStartDate().plusYears(contract.getContractLengthYears());
         this.nextRental = rentals.stream()
                 .filter(rental -> !rental.isPaid()).findFirst();
         this.totalCapital = contract.getCarPrice();
         this.totalInterest = contract.getCarPrice() / 100 * 2;
-        this.numberOfRemainingRentals = rentals.stream()
+        this.numberOfRemainingRentals = calculateNumberOfRetainingRentals(rentals);
+    }
+
+    public long calculateNumberOfRetainingRentals(List<Rental> rentals) {
+        return rentals.stream()
                 .filter(rental -> !rental.isPaid()).count();
     }
 
@@ -73,7 +83,7 @@ public class RentalSummary {
      * Returns the next rental that has not yet been paid, if any.
      *
      * @return an {@link Optional} containing the next unpaid rental, or
-     *         empty if all rentals have been paid
+     * empty if all rentals have been paid
      */
     public Optional<Rental> getNextRental() {
         return nextRental;
