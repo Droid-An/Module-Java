@@ -1,5 +1,10 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+
 import java.time.LocalDate;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Generates and prints rental summaries for car lease {@link Contract}s.
@@ -14,6 +19,7 @@ import java.util.Optional;
  * @see Contract
  */
 public class RentalSummaryService {
+    private static final Logger log = LoggerFactory.getLogger(RentalSummaryService.class);
 
     /**
      * Demonstrates generating and printing rental summaries for a range of
@@ -26,14 +32,14 @@ public class RentalSummaryService {
 
         Contract oneYearContract = new Contract("John Smith", 25, LocalDate.of(2025, 8, 12), 1, 10000);
         Contract twoYearContract = new Contract("Michael Jones", 56, LocalDate.of(2025, 12, 12), 2, 20000);
-        Contract threeYearContract = new Contract("Jane Doe", 77, LocalDate.of(2024, 4, 1), 3, 50000);
-        Contract completedContract = new Contract("Rosie Parker", 47, LocalDate.of(2021, 7, 10), 3, 40000);
+//        Contract threeYearContract = new Contract("Jane Doe", 77, LocalDate.of(2024, 4, 1), 3, 50000);
+//        Contract completedContract = new Contract("Rosie Parker", 47, LocalDate.of(2021, 7, 10), 3, 40000);
 
         RentalSummaryService rentalSummaryService = new RentalSummaryService();
-        rentalSummaryService.printRentalSummary(oneYearContract);
-        rentalSummaryService.printRentalSummary(twoYearContract); // Should throw a suitable error
-        rentalSummaryService.printRentalSummary(threeYearContract);
-        rentalSummaryService.printRentalSummary(completedContract); // Should print a message to say the contract is complete
+        rentalSummaryService.handleContract(oneYearContract);
+        rentalSummaryService.handleContract(twoYearContract); // Should throw a suitable error
+//        rentalSummaryService.printRentalSummary(threeYearContract);
+//        rentalSummaryService.printRentalSummary(completedContract); // Should print a message to say the contract is complete
     }
 
     /**
@@ -41,11 +47,29 @@ public class RentalSummaryService {
      *
      * @param contract the contract to summarize
      * @return an {@link Optional} containing the generated summary; always
-     *         present, since {@link RentalSummary}'s constructor either
-     *         succeeds or throws
+     * present, since {@link RentalSummary}'s constructor either
+     * succeeds or throws
      */
-    private Optional<RentalSummary> generateRentalSummary(Contract contract) {
+    private Optional<RentalSummary> generateRentalSummary(Contract contract) throws InvalidContractLengthException {
         return Optional.of(new RentalSummary(contract));
+    }
+
+    private void printSummary(Contract contract, RentalSummary rentalSummary) {
+        if (rentalSummary.getEndDate().isBefore(LocalDate.now())) {
+            System.out.println("Contract is completed");
+        } else {
+            System.out.printf("Rental summary for %s, %d%n", contract.getCustomerName(), contract.getCustomerAge());
+            System.out.printf("Contract: %1$tA, %1td %1$tB %1$tY - %2$tA, %1td %2$tB %2$tY%n", contract.getStartDate(), rentalSummary.getEndDate());
+            System.out.printf("All rentals:%n");
+            rentalSummary.getRentals().forEach(rental -> System.out.println(rental.toString()));
+            rentalSummary.getNextRental().ifPresentOrElse(
+                    nextRental -> System.out.printf("Next rental %s%n", nextRental),
+                    () -> System.out.println("No upcoming rentals — contract complete.")
+            );
+            System.out.printf("Total amount of capital %f%n", rentalSummary.getTotalCapital());
+            System.out.printf("Total interest %f%n", rentalSummary.getTotalInterest());
+            System.out.printf("Remaining rentals %d%n", rentalSummary.getNumberOfRemainingRentals());
+        }
     }
 
     /**
@@ -69,28 +93,19 @@ public class RentalSummaryService {
      *
      * @param contract the contract to print a summary for
      */
-    void printRentalSummary(Contract contract) {
+    void handleContract(Contract contract) {
+        String requestId = UUID.randomUUID().toString();
+        MDC.put("requestId", requestId);
+        log.info("Processing contract {}", contract);
         try {
             RentalSummaryService rentalSummaryService = new RentalSummaryService();
             RentalSummary rentalSummary = (rentalSummaryService.generateRentalSummary(contract).orElseThrow());
-            System.out.printf("%n--------------------------------------------%n");
-            if (rentalSummary.getEndDate().isBefore(LocalDate.now())) {
-                System.out.println("Contract is completed");
-            } else {
-                System.out.printf("Rental summary for %s, %d%n", contract.getCustomerName(), contract.getCustomerAge());
-                System.out.printf("Contract: %1$tA, %1td %1$tB %1$tY - %2$tA, %1td %2$tB %2$tY%n", contract.getStartDate(), rentalSummary.getEndDate());
-                System.out.printf("All rentals:%n");
-                rentalSummary.getRentals().forEach(rental -> System.out.println(rental.toString()));
-                rentalSummary.getNextRental().ifPresentOrElse(
-                        nextRental -> System.out.printf("Next rental %s%n", nextRental),
-                        () -> System.out.println("No upcoming rentals — contract complete.")
-                );
-                System.out.printf("Total amount of capital %f%n", rentalSummary.getTotalCapital());
-                System.out.printf("Total interest %f%n", rentalSummary.getTotalInterest());
-                System.out.printf("Remaining rentals %d%n", rentalSummary.getNumberOfRemainingRentals());
-            }
-        } catch (Exception e){
-            System.err.println(e);
+            rentalSummaryService.printSummary(contract, rentalSummary);
+        } catch (RuntimeException | InvalidContractLengthException e) {
+            log.error("Error while processing contract", e);
+        } finally {
+            MDC.clear();
+            System.out.printf("--------------------------------------------%n");
         }
     }
 }

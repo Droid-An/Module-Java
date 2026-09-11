@@ -33,7 +33,7 @@ public class Rental {
      * Returns whether this rental has already been paid.
      *
      * @return {@code true} if this rental's due date is on or before today,
-     *         {@code false} otherwise
+     * {@code false} otherwise
      */
     public boolean isPaid() {
         return paid;
