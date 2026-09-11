@@ -30,8 +30,7 @@ public class RentalSummary {
      * @throws InvalidParameterException if the contract length is neither
      *                                    1 nor 3 years
      */
-    public RentalSummary(Contract contract) {
-        this.endDate = contract.getStartDate().plusYears(contract.getContractLengthYears());
+    public RentalSummary(Contract contract) throws InvalidContractLengthException {
         if (contract.getContractLengthYears() == 1) {
             OneYearContractRentalGenerator oneYearContractRentalGenerator = new OneYearContractRentalGenerator();
             this.rentals = oneYearContractRentalGenerator.generateRentals(contract);
@@ -39,7 +38,8 @@ public class RentalSummary {
             ThreeYearContractRentalGenerator threeYearContractRentalGenerator = new ThreeYearContractRentalGenerator();
             this.rentals = threeYearContractRentalGenerator.generateRentals(contract);
         } else {
-            throw new InvalidParameterException("Contract length isn't 1 or 3");
+            log.error("Contract length {} isn't equal 1 or 3", contract.getContractLengthYears());
+            throw new InvalidContractLengthException("Contract length isn't 1 or 3");
         }
         this.nextRental = rentals.stream()
                 .filter(rental -> !rental.isPaid()).findFirst();
