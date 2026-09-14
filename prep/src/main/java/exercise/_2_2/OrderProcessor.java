@@ -8,13 +8,13 @@ public class OrderProcessor {
     }
 
     public static void process(Order order) {
-        System.out.println("Customer name: " + order.customer.name.toUpperCase());
+        System.out.println("Customer name: " + order.customer.getName().toUpperCase());
     }
 }
 
 class Order {
-    int id;
-    Customer customer;
+    private final int id;
+    final Customer customer;
 
     public Order(int id) {
         this.id = id;
@@ -23,9 +23,13 @@ class Order {
 }
 
 class Customer {
-    String name;
+   private final String name;
 
     public Customer(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 }
