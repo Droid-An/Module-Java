@@ -12,11 +12,11 @@ public class RequestProcessor {
     public static void main(String[] args) {
         for (int i = 1; i <= 3; i++) {
             simulateRequest(i);
-            squareRoot(i);
+            square(i);
         }
     }
 
-    public static void squareRoot(int n) {
+    public static void square(int n) {
         log.debug("Processing number {}", n);
         System.out.println(n * n);
     }
