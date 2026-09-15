@@ -13,8 +13,8 @@ public class OrderProcessor {
 }
 
 class Order {
-    private final int id;
     final Customer customer;
+    private final int id;
 
     public Order(int id) {
         this.id = id;
@@ -23,7 +23,7 @@ class Order {
 }
 
 class Customer {
-   private final String name;
+    private final String name;
 
     public Customer(String name) {
         this.name = name;
