@@ -2,21 +2,26 @@ package exericse._3_1;
 import exercise._3_1.ExchangeRateClient;
 import exercise._3_1.PriceService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.mock;
 
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
 public class PriceServiceTest {
 //    Provide a fixed exchange rate regardless of what is requested
+    @Mock
+    ExchangeRateClient rateClient;
     @Test
     public void fixedRateMock() {
-        //I couldn't make annotations work, so I did as usual
-        ExchangeRateClient rateClient = mock(ExchangeRateClient.class);
-        given(rateClient.getRate(anyString(), anyString())).willReturn(1.1);
+        when(rateClient.getRate("EUR", "GBP")).thenReturn(1.1);
         PriceService priceService = new PriceService(rateClient);
         assertEquals(24.42,priceService.convertTo(22.2, "GBP"));
     }
@@ -24,8 +29,7 @@ public class PriceServiceTest {
 //    Add a method convertToGbp and amend the mock to provide different exchange rates for EUR->GBP and EUR->USD
     @Test
     public void differentExchangeForDifferentRates() {
-        ExchangeRateClient rateClient = mock(ExchangeRateClient.class);
-        given(rateClient.getRate(anyString(), anyString())).will((InvocationOnMock invocation) ->
+        when(rateClient.getRate(eq("EUR"), anyString())).then((InvocationOnMock invocation) ->
                 invocation.getArgument(1).equals("GBP")
                         ? 1.1
                         : 0.9);
@@ -36,13 +40,12 @@ public class PriceServiceTest {
 
 //    Take the tests written under PriceService and parameterise them so that each currency is called from a single test method
     @ParameterizedTest(name ="converts {0} correctly")
-    @ValueSource(strings={"GPB","USD"})
+    @ValueSource(strings={"GBP","USD"})
     public void paramTest(String argument){
-        ExchangeRateClient rateClient = mock(ExchangeRateClient.class);
-        given(rateClient.getRate(anyString(), anyString())).will((InvocationOnMock invocation) ->
-                invocation.getArgument(1).equals("GBP")
-                        ? 1.1
-                        : 0.9);
+
+        double rate = argument.equals("GBP") ? 1.1 : 0.9;
+
+        when(rateClient.getRate(eq("EUR"), eq(argument))).thenReturn(rate);
         PriceService priceService = new PriceService(rateClient);
         if (argument.equals("GBP")){
             assertEquals(24.42,priceService.convertTo(22.2, "GBP"));
