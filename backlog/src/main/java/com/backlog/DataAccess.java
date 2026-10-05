@@ -31,11 +31,24 @@ public class DataAccess implements DataAccessLayer {
 
     @Override
     public boolean checkBookExists(Book book) {
-        String sql = "select * from books where author = (?) and title = (?) limit 1";
+        String sql = "select * from books where author = (?) and title = (?)";
         try (Connection c = db.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setString(1, book.getAuthor());
             ps.setString(2, book.getTitle());
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean checkBookExists(String title) {
+        String sql = "select * from books where title = (?)";
+        try (Connection c = db.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, title);
             ResultSet rs = ps.executeQuery();
             return rs.next();
         } catch (SQLException e) {
@@ -54,7 +67,25 @@ public class DataAccess implements DataAccessLayer {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     String value = rs.getString("returned_date");
-//                LocalDate returnedDate = (value== null) ? null : LocalDate.parse(value);
+                    return value != null;
+                }
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean availableToBorrow(String title) {
+        String sql = "select returned_date from borrows where book_id = (select id from books where title = (?))" +
+                " order by id desc limit 1";
+        try (Connection c = db.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, title);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    String value = rs.getString("returned_date");
                     return value != null;
                 }
                 return true;
@@ -109,7 +140,7 @@ public class DataAccess implements DataAccessLayer {
             ps.setString(1, user.name());
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    borrowedBooks.add(new Book(rs.getString("author"), rs.getString("title")));
+                    borrowedBooks.add(new Book(rs.getString("title"), rs.getString("author")));
                 }
             }
         } catch (SQLException e) {
@@ -136,6 +167,4 @@ public class DataAccess implements DataAccessLayer {
         }
     }
 
-
-//    private getBook(Book){}
 }

@@ -12,21 +12,42 @@ public class LibraryService {
         SQLliteDatabase db = new SQLliteDatabase("jdbc:sqlite:sample.db");
         db.initSchema();
         DataAccessLayer dataAccess = new DataAccess(db);
+        Book book1 = new Book("Java", "Ada Lovelace");
+        Book book2 = new Book("Python", "Linus Torvalds");
 
-        Book book1 = new Book("fjhkdgf", "jgfknjkf");
-        Book book2 = new Book("bla", "ble");
-        User user = new User("bobr");
-        User user1 = new User("grogr");
+//        create users with the same name as in schema
+        User user1 = new User("bobr");
+        User user2 = new User("grogr");
+
+        //books can be saved
         libraryService.saveBook(book1, dataAccess, presentationLayer);
         libraryService.saveBook(book2, dataAccess, presentationLayer);
 
-        libraryService.borrowBook(book1, user, dataAccess, presentationLayer);
-        libraryService.borrowBook(book2, user, dataAccess, presentationLayer);
+        //Duplicates can't be saved
+        libraryService.saveBook(book1, dataAccess, presentationLayer);
 
-//        libraryService.borrowBook(book1, user1, dataAccess, presentationLayer);
-        libraryService.listBorrowed(user, dataAccess, presentationLayer);
+        //books can be borrowed
+        libraryService.borrowBook(book1, user1, dataAccess, presentationLayer);
+        libraryService.borrowBook(book2, user1, dataAccess, presentationLayer);
+
+        //Borrowed books can't be borrowed by somebody else
+        libraryService.borrowBook(book1, user2, dataAccess, presentationLayer);
+
+        //books can be returned
         libraryService.returnBook(book1, dataAccess, presentationLayer);
-        libraryService.listBorrowed(user, dataAccess, presentationLayer);
+
+        //returned book can be borrowed again by others
+        libraryService.borrowBook(book1, user2, dataAccess, presentationLayer);
+
+        //list books borrowed by user (only active ones)
+        libraryService.listBorrowed(user1, dataAccess, presentationLayer);
+
+        //search book by title and show if book is available to order
+        libraryService.canBeBorrowed("Java", dataAccess, presentationLayer);
+
+        libraryService.returnBook(book2, dataAccess, presentationLayer);
+        //search book by title and show if book is available to order
+        libraryService.canBeBorrowed("Python", dataAccess, presentationLayer);
 
     }
 
@@ -45,9 +66,8 @@ public class LibraryService {
 
     public void borrowBook(Book book, User user, DataAccessLayer dataAccessLayer, PresentationLayer presentationLayer) {
         if (dataAccessLayer.availableToBorrow(book)) {
-            System.out.println("available to borrow");
             dataAccessLayer.borrow(book, user, LocalDate.now(), LocalDate.now().plusMonths(1));
-            presentationLayer.printSuccess("Book " + book.getTitle() + " borrowed");
+            presentationLayer.printSuccess("Book " + book.getTitle() + " has been borrowed by " + user.name());
         } else {
             presentationLayer.printSuccess("Book " + book.getTitle() + " is already borrowed");
         }
@@ -81,7 +101,6 @@ public class LibraryService {
         return Math.toIntExact(ChronoUnit.DAYS.between(returnBy, LocalDate.now()));
     }
 
-
     public void listBorrowed(User user, DataAccessLayer dataAccessLayer, PresentationLayer presentationLayer) {
         List<Book> books = dataAccessLayer.listBorrowed(user);
         if (books.isEmpty()) {
@@ -94,7 +113,16 @@ public class LibraryService {
         }
     }
 
-    public boolean isAvailableToBorrow(String title) {
-        return false;
+    //deduplicate some checks if possible
+    public void canBeBorrowed(String title, DataAccessLayer dataAccessLayer, PresentationLayer presentationLayer) {
+        if (!dataAccessLayer.checkBookExists(title)) {
+            presentationLayer.printSuccess("No such books exist");
+            return;
+        }
+        if (dataAccessLayer.availableToBorrow(title)) {
+            presentationLayer.printSuccess("Book with title " + title + " can be borrowed");
+        } else if (!dataAccessLayer.availableToBorrow(title)) {
+            presentationLayer.printSuccess("Book with title " + title + " is borrowed by another user");
+        }
     }
 }

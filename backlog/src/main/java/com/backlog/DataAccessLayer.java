@@ -8,7 +8,12 @@ public interface DataAccessLayer {
 
     boolean checkBookExists(Book book);
 
+    boolean checkBookExists(String title);
+
     boolean availableToBorrow(Book book);
+
+    // too much descisions on db side
+    boolean availableToBorrow(String title);
 
     void borrow(Book book, User user, LocalDate borrowDate, LocalDate returnByDate);
 
