@@ -3,7 +3,6 @@ package com.backlog;
 public class Book {
     private final String title;
     private final String author;
-    private int id;
 
     public Book(String title, String author) {
         this.title = title;
