@@ -12,7 +12,6 @@ public interface DataAccessLayer {
 
     boolean availableToBorrow(Book book);
 
-    // too much descisions on db side
     boolean availableToBorrow(String title);
 
     void borrow(Book book, User user, LocalDate borrowDate, LocalDate returnByDate);

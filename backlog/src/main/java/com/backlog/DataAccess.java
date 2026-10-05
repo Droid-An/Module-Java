@@ -21,8 +21,8 @@ public class DataAccess implements DataAccessLayer {
         String sql = "insert into books (author, title) values (?, ?)";
         try (Connection c = db.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setString(1, book.getAuthor());
-            ps.setString(2, book.getTitle());
+            ps.setString(1, book.author());
+            ps.setString(2, book.title());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -34,8 +34,8 @@ public class DataAccess implements DataAccessLayer {
         String sql = "select * from books where author = (?) and title = (?)";
         try (Connection c = db.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setString(1, book.getAuthor());
-            ps.setString(2, book.getTitle());
+            ps.setString(1, book.author());
+            ps.setString(2, book.title());
             ResultSet rs = ps.executeQuery();
             return rs.next();
         } catch (SQLException e) {
@@ -62,8 +62,8 @@ public class DataAccess implements DataAccessLayer {
                 " order by id desc limit 1";
         try (Connection c = db.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setString(1, book.getAuthor());
-            ps.setString(2, book.getTitle());
+            ps.setString(1, book.author());
+            ps.setString(2, book.title());
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     String value = rs.getString("returned_date");
@@ -106,8 +106,8 @@ public class DataAccess implements DataAccessLayer {
                 """;
         try (Connection c = db.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setString(1, book.getAuthor());
-            ps.setString(2, book.getTitle());
+            ps.setString(1, book.author());
+            ps.setString(2, book.title());
             ps.setString(3, user.name());
             ps.setString(4, borrowDate.toString());
             ps.setString(5, returnByDate.toString());
@@ -123,8 +123,8 @@ public class DataAccess implements DataAccessLayer {
         try (Connection c = db.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setString(1, returnDate.toString());
-            ps.setString(2, book.getAuthor());
-            ps.setString(3, book.getTitle());
+            ps.setString(2, book.author());
+            ps.setString(3, book.title());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -154,13 +154,13 @@ public class DataAccess implements DataAccessLayer {
         String sql = "select return_by_date from borrows where book_id = ((select id from books where author = ? and title = ?)) and returned_date is null limit 1";
         try (Connection c = db.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setString(1, book.getAuthor());
-            ps.setString(2, book.getTitle());
+            ps.setString(1, book.author());
+            ps.setString(2, book.title());
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return LocalDate.parse(rs.getString("return_by_date"));
                 }
-                throw new IllegalStateException("Book is not currently borrowed: " + book.getTitle());
+                throw new IllegalStateException("Book is not currently borrowed: " + book.title());
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
