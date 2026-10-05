@@ -5,50 +5,12 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class LibraryService {
+    private final DataAccessLayer dataAccessLayer;
+    private final PresentationLayer presentationLayer;
 
-    public static void main(String[] args) {
-        LibraryService libraryService = new LibraryService();
-        PresentationLayer presentationLayer = new ConsolePrint();
-        SQLliteDatabase db = new SQLliteDatabase("jdbc:sqlite:sample.db");
-        db.initSchema();
-        DataAccessLayer dataAccess = new DataAccess(db);
-        Book book1 = new Book("Java", "Ada Lovelace");
-        Book book2 = new Book("Python", "Linus Torvalds");
-
-//        create users with the same name as in schema
-        User user1 = new User("bobr");
-        User user2 = new User("grogr");
-
-        //books can be saved
-        libraryService.saveBook(book1, dataAccess, presentationLayer);
-        libraryService.saveBook(book2, dataAccess, presentationLayer);
-
-        //Duplicates can't be saved
-        libraryService.saveBook(book1, dataAccess, presentationLayer);
-
-        //books can be borrowed
-        libraryService.borrowBook(book1, user1, dataAccess, presentationLayer);
-        libraryService.borrowBook(book2, user1, dataAccess, presentationLayer);
-
-        //Borrowed books can't be borrowed by somebody else
-        libraryService.borrowBook(book1, user2, dataAccess, presentationLayer);
-
-        //books can be returned
-        libraryService.returnBook(book1, dataAccess, presentationLayer);
-
-        //returned book can be borrowed again by others
-        libraryService.borrowBook(book1, user2, dataAccess, presentationLayer);
-
-        //list books borrowed by user (only active ones)
-        libraryService.listBorrowed(user1, dataAccess, presentationLayer);
-
-        //search book by title and show if book is available to order
-        libraryService.canBeBorrowed("Java", dataAccess, presentationLayer);
-
-        libraryService.returnBook(book2, dataAccess, presentationLayer);
-        //search book by title and show if book is available to order
-        libraryService.canBeBorrowed("Python", dataAccess, presentationLayer);
-
+    public LibraryService(DataAccessLayer dataAccessLayer, PresentationLayer presentationLayer) {
+        this.dataAccessLayer = dataAccessLayer;
+        this.presentationLayer = presentationLayer;
     }
 
     public void saveBook(Book book, DataAccessLayer dataAccessLayer, PresentationLayer presentationLayer) {
