@@ -2,6 +2,7 @@ package com.backlog;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 public class LibraryService {
 
@@ -13,13 +14,19 @@ public class LibraryService {
         DataAccessLayer dataAccess = new DataAccess(db);
 
         Book book1 = new Book("fjhkdgf", "jgfknjkf");
+        Book book2 = new Book("bla", "ble");
         User user = new User("bobr");
         User user1 = new User("grogr");
         libraryService.saveBook(book1, dataAccess, presentationLayer);
+        libraryService.saveBook(book2, dataAccess, presentationLayer);
+
         libraryService.borrowBook(book1, user, dataAccess, presentationLayer);
-        libraryService.borrowBook(book1, user1, dataAccess, presentationLayer);
+        libraryService.borrowBook(book2, user, dataAccess, presentationLayer);
+
+//        libraryService.borrowBook(book1, user1, dataAccess, presentationLayer);
+        libraryService.listBorrowed(user, dataAccess, presentationLayer);
         libraryService.returnBook(book1, dataAccess, presentationLayer);
-        libraryService.borrowBook(book1, user1, dataAccess, presentationLayer);
+        libraryService.listBorrowed(user, dataAccess, presentationLayer);
 
     }
 
@@ -75,8 +82,16 @@ public class LibraryService {
     }
 
 
-    public void listBorrowed(User user) {
-
+    public void listBorrowed(User user, DataAccessLayer dataAccessLayer, PresentationLayer presentationLayer) {
+        List<Book> books = dataAccessLayer.listBorrowed(user);
+        if (books.isEmpty()) {
+            presentationLayer.printSuccess("No books borrowed");
+        } else {
+            presentationLayer.printSuccess("Books borrowed by " + user.name() + ":");
+            for (Book book : books) {
+                presentationLayer.printSuccess(book.getTitle() + " by " + book.getAuthor());
+            }
+        }
     }
 
     public boolean isAvailableToBorrow(String title) {

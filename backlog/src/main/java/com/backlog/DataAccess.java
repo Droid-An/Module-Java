@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataAccess implements DataAccessLayer {
 
@@ -71,12 +73,11 @@ public class DataAccess implements DataAccessLayer {
                     (select id from users where name = ?),
                     ?, ?)
                 """;
-        System.out.println(borrowDate.toString());
         try (Connection c = db.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setString(1, book.getAuthor());
             ps.setString(2, book.getTitle());
-            ps.setString(3, user.getName());
+            ps.setString(3, user.name());
             ps.setString(4, borrowDate.toString());
             ps.setString(5, returnByDate.toString());
             ps.executeUpdate();
@@ -97,6 +98,24 @@ public class DataAccess implements DataAccessLayer {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<Book> listBorrowed(User user) {
+        String sql = "select books.title, books.author from borrows join books on book_id = books.id where user_id = ((select id from users where name = ?)) and returned_date is null";
+        List<Book> borrowedBooks = new ArrayList<>();
+        try (Connection c = db.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, user.name());
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    borrowedBooks.add(new Book(rs.getString("author"), rs.getString("title")));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return borrowedBooks;
     }
 
     @Override

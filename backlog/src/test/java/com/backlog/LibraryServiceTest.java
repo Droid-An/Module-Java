@@ -7,6 +7,9 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
@@ -31,7 +34,7 @@ public class LibraryServiceTest {
     }
 
     @Test
-    public void savesDublpicatedBook() {
+    public void savesDuplicatedBook() {
         Book book = new Book("Bla", "bla");
         LibraryService libraryService = new LibraryService();
         when(dataAccess.checkBookExists(book)).thenReturn(false);
@@ -109,6 +112,30 @@ public class LibraryServiceTest {
         Mockito.verify(dataAccess).returnBook(book, LocalDate.now());
         Mockito.verify(presentationLayer).printSuccess("Book " + book.getTitle() + " is returned successfully");
     }
+
+    @Test
+    public void listsBorrowedBooks() {
+        Book book1 = new Book("Bla", "bla");
+        Book book2 = new Book("Bla1", "bla1");
+        List<Book> borrowedBooks = new ArrayList<>(Arrays.asList(book1,book2));
+        User user = new User("user");
+        LibraryService libraryService = new LibraryService();
+        when(dataAccess.listBorrowed(user)).thenReturn(borrowedBooks);
+        libraryService.listBorrowed( user,dataAccess,presentationLayer);
+        Mockito.verify(presentationLayer).printSuccess("Books borrowed by " + user.name() + ":");
+        Mockito.verify(presentationLayer).printSuccess(book1.getTitle() + " by " + book1.getAuthor());
+        Mockito.verify(presentationLayer).printSuccess(book2.getTitle() + " by " + book2.getAuthor());
+    }
+
+    @Test
+    public void tellsUserHeHasntBorrowedAnyBook() {
+        User user = new User("user");
+        LibraryService libraryService = new LibraryService();
+        when(dataAccess.listBorrowed(user)).thenReturn(new ArrayList<>());
+        libraryService.listBorrowed( user,dataAccess,presentationLayer);
+        Mockito.verify(presentationLayer).printSuccess("No books borrowed");
+    }
+
 
 
 }
