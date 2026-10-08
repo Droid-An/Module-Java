@@ -5,9 +5,18 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Instantiate a SQlite db connection, add columns and populate users
+ */
 public class SQLliteDatabase {
     private final String url;
 
+    /**
+     * Set up a url to connect to db
+     * For local db use "jdbc:sqlite:sample.db"
+     *
+     * @param url
+     */
     public SQLliteDatabase(String url) {
         this.url = url;
     }
@@ -16,6 +25,9 @@ public class SQLliteDatabase {
         return DriverManager.getConnection(url);
     }
 
+    /**
+     * Set up db schema and populate two users named "grogr" and "bobr"
+     */
     public void initSchema() {
         try (Connection c = getConnection(); Statement statement = c.createStatement()) {
             statement.execute("""

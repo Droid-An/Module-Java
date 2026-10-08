@@ -75,7 +75,6 @@ public class LibraryService {
         }
     }
 
-    //deduplicate some checks if possible
     public void canBeBorrowed(String title) {
         if (!dataAccessLayer.checkBookExists(title)) {
             presentationLayer.printSuccess("No such books exist");
